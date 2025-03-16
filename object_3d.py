@@ -68,10 +68,37 @@ class Object3D:
 
 class Axes(Object3D):
     def __init__(self, render):
-        super().__init__(render)
-        self.vertices = np.array([(0, 0, 0, 1), (1, 0, 0, 1), (0, 1, 0, 1), (0, 0, 1, 1)])
-        self.faces = np.array([(0, 1), (0, 2), (0, 3)])
+        axes_vertices = np.array([(0, 0, 0, 1), (1, 0, 0, 1), (0, 1, 0, 1), (0, 0, 1, 1)])
+        axes_faces = np.array([(0, 1), (0, 2), (0, 3)])
+        super().__init__(render, axes_vertices, axes_faces)
         self.colors = [pg.Color('red'), pg.Color('green'), pg.Color('blue')]
         self.color_faces = [(color, face) for color, face in zip(self.colors, self.faces)]
         self.draw_vertices = False
         self.label = 'XYZ'
+
+class Cube(Object3D):
+    def __init__(self, render, pos):
+        axes_vertices = np.array([
+            (0, 0, 0, 1), # 0
+            (1, 0, 0, 1), # 1
+            (0, 1, 0, 1), # 2
+            (0, 0, 1, 1), # 3
+            (1, 1, 0, 1), # 4
+            (1, 0, 1, 1), # 5
+            (0, 1, 1, 1), # 6
+            (1, 1, 1, 1), # 7
+        ])
+        axes_faces = np.array([
+            (0, 1, 4, 2),
+            (0, 2, 6, 3),
+            (0, 1, 5, 3),
+            (4, 1, 5, 7),
+            (4, 2, 6, 7),
+            (5, 3, 6, 7),
+        ])
+        super().__init__(render, axes_vertices, axes_faces)
+        self.translate(pos)
+        # self.colors = [pg.Color('red'), pg.Color('green'), pg.Color('blue'),pg.Color('red'), pg.Color('green'), pg.Color('blue')]
+        # self.color_faces = [(color, face) for color, face in zip(self.colors, self.faces)]
+        self.draw_vertices = False
+        # self.label = 'XYZ'

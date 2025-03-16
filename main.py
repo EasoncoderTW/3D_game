@@ -7,7 +7,7 @@ import pygame as pg
 class SoftwareRender:
     def __init__(self):
         pg.init()
-        self.RES = self.WIDTH, self.HEIGHT = 1600, 900
+        self.RES = self.WIDTH, self.HEIGHT = 1280, 720
         self.H_WIDTH, self.H_HEIGHT = self.WIDTH // 2, self.HEIGHT // 2
         self.FPS = 60
         self.screen = pg.display.set_mode(self.RES)
@@ -17,8 +17,12 @@ class SoftwareRender:
     def create_objects(self):
         self.camera = Camera(self, [-5, 6, -55])
         self.projection = Projection(self)
-        self.object = self.get_object_from_file('resources/t_34_obj.obj')
-        self.object.rotate_y(-math.pi / 4)
+        self.objects = [
+            Cube(self,(0,0,0)),
+            Cube(self,(1,0,0)),
+            Cube(self,(2,0,0)),
+            Cube(self,(0,1,0)),
+        ]
 
     def get_object_from_file(self, filename):
         vertex, faces = [], []
@@ -33,7 +37,8 @@ class SoftwareRender:
 
     def draw(self):
         self.screen.fill(pg.Color('darkslategray'))
-        self.object.draw()
+        for o in self.objects:
+            o.draw()
 
     def run(self):
         while True:
